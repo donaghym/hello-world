@@ -1,0 +1,87 @@
+---
+openapi: 3.0.0
+info:
+  title: blog
+  description: Blog API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 0.0.1
+paths:
+  /blog:
+    get:
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlogPost'
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+        required: true
+      responses:
+        201: {}
+  /blog/{postId}:
+    get:
+      description: Get Blog Post
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPost'
+    put:
+      description: Update Blog Post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+        required: true
+      responses:
+        204: {}
+    delete:
+      description: Delete Blog Post
+      responses:
+        204: {}
+    parameters:
+    - name: postId
+      in: path
+      description: Blog Post ID
+      required: true
+      schema:
+        type: integer
+components:
+  schemas:
+    BlogPost:
+      title: Root Type for Post
+      description: The root of the Post type's schema.
+      required:
+      - content
+      - title
+      type: object
+      properties:
+        postAuthor:
+          type: string
+        postAuthorId:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        datePosted:
+          format: date
+          type: string
+        dateModified:
+          format: date
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
